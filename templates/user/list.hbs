@@ -1,0 +1,46 @@
+<table style="margin-bottom: 10px;">
+    <tr>
+        <th>#</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Actions</th>
+    </tr>
+    {{#each users }}
+    <tr>
+        <td>{{@index}}</td>
+        <td>{{this.id}}</td>
+        <td>{{this.name}}</td>
+        <td>{{#if this.is_active}}<span style="color: green;">Active</span>{{else}}<span
+                style="color: red;">Inactive</span>{{/if}}</td>
+        <td>
+            <a href="/users/{{ this.id }}/view" hx-get="/users/{{ this.id }}/view" hx-target="#content" hx-push-url="true" class="button button-outline btn-sm" style="margin-bottom: 0;">View</a>
+        </td>
+    </tr>
+    {{/each}}
+</table>
+
+{{#if pagination }}
+<div class="clearfix">
+  <div class="float-left"></div>
+  <div class="float-right">
+    <nav class="pagination">
+      {{#unless pagination.prev }}
+      Prev
+      {{else}}
+      <a href="{{ pagination.prev }}" hx-get="{{ pagination.prev }}" hx-target="#content" hx-push-url="true">Prev</a>
+      {{/unless}}
+      {{#each pagination.items }}
+      <a class="{{#if this.is_active}}active{{/if}}" href="{{ this.url }}" hx-get="{{ this.url }}" hx-target="#content"
+        hx-push-url="true">{{ this.label }}</a>
+      {{/each}}
+      ...
+      {{#unless pagination.next }}
+      Next
+      {{else}}
+      <a href="{{ pagination.next }}" hx-get="{{ pagination.next }}" hx-target="#content" hx-push-url="true">Next</a>
+      {{/unless}}
+    </nav>
+  </div>
+</div>
+{{/if}}

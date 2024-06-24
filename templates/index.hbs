@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | HTMX</title>
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css" />
+    <style>
+        body {
+            margin: 1rem;
+            background-color: #eee;
+        }
+
+        .card {
+            background-color:
+                #fff;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .navbar {
+            margin-bottom: 10px;
+            padding: calc(1rem + 5px);
+        }
+
+        #content {
+            margin-left: 10px;
+            min-height: 50vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 80vw;
+            margin: auto;
+        }
+
+        .sidebar {
+            margin: 1rem 0;
+        }
+
+        .sidebar li {
+            margin: 0 0 5px 0;
+            list-style: none;
+        }
+
+        .sidebar li a {
+            padding: 5px 10px;
+            display: block;
+            transition: all .3s ease-out;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .sidebar li a:hover,
+        .sidebar li a.active {
+            background-color: #eee;
+        }
+
+        .sidebar li a.active::before {
+            display: block;
+            position: absolute;
+            content: "";
+            width: 5px;
+            height: 50%;
+            background-color: rgb(6, 223, 6);
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        .btn-sm {
+            line-height: normal;
+            padding: 8px 20px;
+            height: auto;
+        }
+
+        nav.pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav.pagination a {
+            padding: 2px 5px;
+            border-radius: 5px;
+            border: 1px solid #777;
+            margin: 0 2px;
+            line-height: normal;
+        }
+
+        nav.pagination a.active {
+            background-color: #eee;
+        }
+
+        nav.pagination a:not(.active):hover {
+            background-color: #eee;
+        }
+    </style>
+    <script>
+        function handelRouteChanges(name) {
+            if (!name) {
+                name = "home"
+            }
+            document.querySelectorAll(".sidebar > li > a").forEach(elm => {
+                if (elm.getAttribute("href") == `/${name}`) {
+                    elm.classList.add("active");
+                } else {
+                    elm.classList.remove("active");
+                }
+            })
+
+            document.title = `${name.charAt(0).toUpperCase()}${name.substring(1)} | HTMX`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            handelRouteChanges(location.pathname.split("/").pop());
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card navbar"><strong>Welcome!</strong></div>
+        <div class="row" style="width: 100%; margin: 0">
+            <div class="column column-10 card">
+                <ul class="sidebar">
+                    <li hx-trigger="click[handelRouteChanges('users')]"><a href="/users" hx-get="/users" hx-target="#content" hx-push-url="true">Users</a>
+                    </li>
+                    <li hx-trigger="click[handelRouteChanges('about')]"><a href="/about" hx-get="/about" hx-target="#content" hx-push-url="true">About</a>
+                    </li>
+                    <li hx-trigger="click[handelRouteChanges('contact')]"><a href="/contact" hx-get="/contact" hx-target="#content" hx-push-url="true">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column" style="padding: 0;">
+                <main id="content" class="card">
+                    {{#if content}}
+                    {{{content}}}
+                    {{else}}
+                    <h1>Welcome to the HTMX SPA example</h1>
+                    <p>Click the links above to navigate.</p>
+                    {{/if}}
+                </main>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
