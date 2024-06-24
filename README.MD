@@ -47,10 +47,10 @@ cd htmx
 
 ## Project Structure
 
-    -`src/main.rs`: Entry point of the application.
-    -`src/routes.rs`: Defines the application routes.
-    -`src/middleware.rs`: Contains middleware logic.
-    -`templates/`: Directory for Handlebars templates.
+  -`src/main.rs`: Entry point of the application.
+  -`src/routes.rs`: Defines the application routes.
+  -`src/middleware.rs`: Contains middleware logic.
+  -`templates/`: Directory for Handlebars templates.
 
 ## Tree view
 
