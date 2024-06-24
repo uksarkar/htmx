@@ -49,7 +49,7 @@ cd htmx
 
 - `src/main.rs`: Entry point of the application.
 - `src/routes.rs`: Defines the application routes.
-- `src/middleware.rs`: Contains middleware logic.
+- `src/response.rs`: Contains middleware logic and response struct.
 - `templates/`: Directory for Handlebars templates.
 
 ## Tree view
